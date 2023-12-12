@@ -6,8 +6,7 @@
 #include <condition_variable>
 
 template<typename T>
-class ThreadSafeQueue
-{
+class ThreadSafeQueue {
 private:
     /* data */
     mutable std::mutex mut;
