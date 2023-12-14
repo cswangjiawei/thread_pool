@@ -14,5 +14,6 @@ int main(int argc, char **argv) {
     ThreadPool pool;
     pool.submit(first);
     pool.submit(second);
+    pool.submit([]() { std::cout << "hello lamda" << std::endl; });
     return 0;
 }
