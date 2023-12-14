@@ -6,4 +6,4 @@ add_executable(example ${SOURCES})
 
 message("PROJECT_SOURCE _DIR = ${PROJECT_SOURCE_DIR}")
 
-target_include_directories(example PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(example PRIVATE ${PROJECT_SOURCE_DIR}/include)
