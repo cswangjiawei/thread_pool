@@ -1,6 +1,6 @@
 #include "thread_pool.h"
 
-ThreadPool::ThreadPool():done(false) {
+ThreadPool::ThreadPool():done(false), joiner(threads) {
     unsigned const thread_count = std::thread::hardware_concurrency();
     try {
         for (unsigned i=0; i<thread_count; ++i) {
@@ -14,11 +14,6 @@ ThreadPool::ThreadPool():done(false) {
 
 ThreadPool::~ThreadPool() {
     done = true;
-    for (unsigned i=0; i<threads.size(); ++i) {
-        if (threads[i].joinable()) {
-            threads[i].join();
-        }
-    }
 }
 
 void ThreadPool::worker_thread() {

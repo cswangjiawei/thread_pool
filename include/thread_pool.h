@@ -6,6 +6,7 @@
 #include <thread>
 #include <vector>
 #include "thread_safe_queue.h"
+#include "join_threads.h"
 
 class ThreadPool {
 private:
@@ -13,6 +14,7 @@ private:
     std::atomic_bool done;
     ThreadSafeQueue<std::function<void()> > work_queue;
     std::vector<std::thread> threads;
+    JoinThreads joiner;
 
     void worker_thread();
 
