@@ -18,7 +18,7 @@ ThreadPool::~ThreadPool() {
 
 void ThreadPool::worker_thread() {
     while (!done) {
-        std::function<void()> task;
+        std::packaged_task<int() > task;
         work_queue.wait_and_pop(task);
         task();
     }

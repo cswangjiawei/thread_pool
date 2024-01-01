@@ -5,6 +5,7 @@
 #include <functional>
 #include <thread>
 #include <vector>
+#include <future>
 #include "thread_safe_queue.h"
 #include "join_threads.h"
 
@@ -12,7 +13,7 @@ class ThreadPool {
 private:
     /* data */
     std::atomic_bool done;
-    ThreadSafeQueue<std::function<void()> > work_queue;
+    ThreadSafeQueue<std::packaged_task<int() > > work_queue;
     std::vector<std::thread> threads;
     JoinThreads joiner;
 
@@ -23,8 +24,11 @@ public:
     ~ThreadPool();
 
     template<typename FunctionType>
-    void submit(FunctionType f) {
-    work_queue.push(std::function<void()>(f));
+    std::future<int> submit(FunctionType f) {
+        std::packaged_task<decltype(f())() > task(f);
+        std::future<int> res(task.get_future());
+        work_queue.push(std::move(task));
+        return res;
     }
 };
 

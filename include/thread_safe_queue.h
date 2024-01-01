@@ -18,7 +18,7 @@ public:
  ~ThreadSafeQueue(){}
  void push(T new_value) {
     std::lock_guard<std::mutex> lk(mut);
-    data_queue.push(new_value);
+    data_queue.push(std::move(new_value));
     data_cond.notify_one();
  }
 
