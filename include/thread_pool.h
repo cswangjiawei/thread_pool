@@ -20,11 +20,11 @@ private:
     void worker_thread();
 
 public:
-    ThreadPool(/* args */);
+    ThreadPool(/* args */); 
     ~ThreadPool();
 
     template<typename FunctionType>
-    std::future<int> submit(FunctionType f) {
+    decltype(auto) submit(FunctionType f) {
         std::packaged_task<decltype(f())() > task(f);
         std::future<int> res(task.get_future());
         work_queue.push(std::move(task));
